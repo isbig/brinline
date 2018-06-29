@@ -2,7 +2,6 @@ gunicorn==19.7.1
 Flask
 wit
 line-bot-sdk
-requests
 tensorflow
 deepcut
 psycopg2-binary
