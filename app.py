@@ -264,12 +264,7 @@ def handle_message(event):
         else:
             print("system will not response because it is the same message")
 
-    try:
-        profile = line_bot_api.get_profile('<user_id>')
-        who = profile.user_id
-    except LineBotApiError:
-        who = 'unknown'
-        print('unknown user')
+    who = event.source.user_id
     user_word = event.message.text
     test(user_word, who)
 
