@@ -62,11 +62,6 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    def sent_to_user(sent_word):
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=sent_word))
-
     def extract_value(inp_text, wit_token):
         understanding = Wit(wit_token)
         token_input_text = deepcut.tokenize(inp_text)
@@ -240,7 +235,8 @@ def handle_message(event):
                 alpha = simple_con(b, sen)
                 resp_word = alpha.text
                 purpose = alpha.pur
-            for number, word in enumerate(resp_word):
+            a = []
+            for word in resp_word:
                 # หยิบสิ่ง me ส่งล่าสุดมาใส่ในตัวแปร last_word แล้วเทียบกับสิ่งที่จะส่งอีกครั้งว่าซ้ำกันหรือไม่
                 # ป้องกันการส่งข้อความซ้ำ
                 cur.execute("SELECT send FROM fores WHERE who = %(str)s ORDER BY time DESC LIMIT 1;", {'str': "me"})
@@ -249,7 +245,7 @@ def handle_message(event):
 
                 last_word = str(m)[3:-4]
                 if word != last_word:
-                    sent_to_user(word)
+                    a = a.append(TextSendMessage(text=word))
 
                     # หลังจากส่งข้อความไปแล้ว นำข้อความที่ส่งใส่เข้าไปใน fores
                     cur.execute("INSERT INTO fores (who, send, receiver, mode, time) VALUES (%(person1)s, %(wd)s, "
@@ -258,7 +254,8 @@ def handle_message(event):
                     conn.commit()
                 else:
                     pass
-
+            line_bot_api.reply_message(
+                event.reply_token, a)
             cur.close()
             conn.close()
         else:
