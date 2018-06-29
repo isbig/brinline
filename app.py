@@ -245,7 +245,7 @@ def handle_message(event):
 
                 last_word = str(m)[3:-4]
                 if word != last_word:
-                    a = a.append(TextSendMessage(text=word))
+                    a.append(TextSendMessage(text=word))
 
                     # หลังจากส่งข้อความไปแล้ว นำข้อความที่ส่งใส่เข้าไปใน fores
                     cur.execute("INSERT INTO fores (who, send, receiver, mode, time) VALUES (%(person1)s, %(wd)s, "
