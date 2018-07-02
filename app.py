@@ -95,12 +95,12 @@ def handle_message(event):
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         elif 0.4 < con <= 0.6:
-            s = ['ไม่ค่อยมันใจว่า', 'ไม่ค่อยมั่นใจนะว่า', 'ฉันไม่แน่ใจนะว่า']
+            s = ['ไม่ค่อยมั่นใจว่า', 'ไม่ค่อยมั่นใจนะว่า', 'ฉันไม่แน่ใจนะว่า']
             n = [', ', ', ', '']
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         else:
-            s = ['ฉันไม่แน่ใจว่า', 'ไม่ค่อยมันใจเลยว่า', 'ฉันไม่แน่ใจ แต่ก็คิดว่า']
+            s = ['ฉันไม่แน่ใจว่า', 'ไม่ค่อยมั่นใจเลยว่า', 'ฉันไม่แน่ใจ แต่ก็คิดว่า']
             n = n = [', ', ', ', '']
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
@@ -128,7 +128,7 @@ def handle_message(event):
 
     def choose_game(inp_text, wit_token):
         value, confident = extract_value(inp_text, wit_token)
-        sen_type = extract_value(inp_text, sen)
+        sen_type, confident1 = extract_value(inp_text, sen)
         chm = namedtuple('out', 'text pur')
         if sen_type == 'ถาม':
             output = message("ฉันถามคุณก่อนนะ, ถ้าไม่อยากเล่นก็ไม่เป็นไร, ฉันไม่บังคับ")
@@ -154,7 +154,7 @@ def handle_message(event):
     def happy_sad(inp_text, wit_token):
         value, confident = extract_value(inp_text, wit_token)
 
-        value1 = extract_value(inp_text, sf)
+        value1, confident1 = extract_value(inp_text, sf)
         chm = namedtuple('out', 'text pur')
         if inp_text == 'เลิกเล่น':
             output = message("ไม่เล่นทายใจแล้วหรือ, ถ้างั้นเล่นอะไรดีล่ะ")
@@ -183,7 +183,7 @@ def handle_message(event):
 
     def true_false(inp_text, wit_token):
         value, confident = extract_value(inp_text, wit_token)
-        value1 = extract_value(inp_text, sen)
+        value1, confident1 = extract_value(inp_text, sen)
 
         chm = namedtuple('out', 'text pur')
         if inp_text == 'เลิกเล่น':
@@ -205,8 +205,8 @@ def handle_message(event):
         return chm(text=output, pur=choose)
 
     def simple_con(inp_text, wit_token):
-        value = extract_value(inp_text, wit_token)
-        s = ['บอกเล่า', 'ด่า', 'ทักทาย', 'ชม', 'ขอ', 'ถาม']
+        value, confident = extract_value(inp_text, wit_token)
+        s = ['ว่า', 'บอกเล่า', 'ตอบ', 'แสดงความต้องการ', 'คำสั่ง', 'ทักทาย', 'ชม', 'ถาม']
         chm = namedtuple('out', 'text pur')
         if 'อยาก' in inp_text:
             output = message('ต้องการทำอะไรนะ')
@@ -311,4 +311,3 @@ def handle_message(event):
 
 if __name__ == "__main__":
     app.run()
-    
