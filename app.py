@@ -174,7 +174,7 @@ def handle_message(event):
             output = message_with_con('นั่นทำให้คุณเป็นทุกข์', confident)
             choose = 2
         elif value == 'เฉยๆ':
-            output = message_with_con('นั่นทำให้คุณเฉยๆ')
+            output = message_with_con('นั่นทำให้คุณเฉยๆ', confident)
             choose = 2
         else:
             output = message('ไม่รู้เหมือนกัน อ่ะเล่นต่อ')
@@ -182,11 +182,17 @@ def handle_message(event):
         return chm(text=output, pur=choose)
 
     def true_false(inp_text, wit_token):
-        value = extract_value(inp_text, wit_token)
+        value, confident = extract_value(inp_text, wit_token)
+        value1 = extract_value(inp_text, sen)
+
         chm = namedtuple('out', 'text pur')
         if inp_text == 'เลิกเล่น':
             output = message('เบื่อแล้วเหรอ งั้นเล่นอะไรต่อดี')
             choose = 1
+        elif value1 != 'บอกเล่า':
+            output = message('ฉันบอกไม่ได้หรอก, เพราะนั่นไม่ใช่ประโยคบอกเล่า, คุณต้องใช้ประโยคบอกเล่า, '
+                             'ฉันถึงจะรู้ว่ามันจริงหรือไม่จริง, พิมพ์ประโยคต่อไปมาได้เลยนะ')
+            choose = 3
         elif value == 'มุสา':
             output = message_with_con('คุณโกหก', confident)
             choose = 3
