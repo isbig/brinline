@@ -169,6 +169,9 @@ def handle_message(event):
         elif value1 == 'Me' and value2 == 'ถาม':
             output = message("คุณถามฉันเหรอ, ฉันก็ไม่รู้จะถามใครต่อดี")
             choose = 2
+        elif value1 == 'Me':
+            output = message("พิมพ์เรื่องของคุณดีกว่า, เรากำลังเล่นเกมอยู่นะ")
+            choose = 2
         elif value1 == 'Other':
             output = message("เกมนี้ฉันทายว่าคุณความสุขไหม, คุณก็ต้องพิมพ์เรื่องของตัวเองสิ, "
                              "พิมพ์ประโยคต่อไปเลยฉันจะทาย")
