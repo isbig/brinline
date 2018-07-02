@@ -155,16 +155,22 @@ def handle_message(event):
         value, confident = extract_value(inp_text, wit_token)
 
         value1, confident1 = extract_value(inp_text, sf)
+        value2, confident2 = extract_value(inp_text, sen)
         chm = namedtuple('out', 'text pur')
         if inp_text == 'เลิกเล่น':
             output = message("ไม่เล่นทายใจแล้วหรือ, ถ้างั้นเล่นอะไรดีล่ะ")
             choose = 1
-        elif value1 == 'Me':
-            output = message("ฉันจะทายเรื่องของตัวเองทำไม, คุณอยากเลิกเล่นไหม, ถ้าอยากเลิกเล่นพิมพ์ว่าเลิกเล่น, "
-                             "หรือเล่นต่อก็พิมพ์เรื่องของคุณเอง")
+        elif value1 == 'Me' and value2 == 'ชม':
+            output = message("ขอบคุณที่ชม, พิมพ์ต่อเลยนะ")
+            choose = 2
+        elif value1 == 'Me' and value2 == 'ว่า':
+            output = message("คุณว่าฉันทำไม, คุณจะเลิกเล่นก็ได้, พิมพ์ว่าเลิกเล่นสิ")
+            choose = 2
+        elif value1 == 'Me' and value2 == 'ถาม':
+            output = message("คุณถามฉันเหรอ, ฉันก็ไม่รู้จะถามใครต่อดี")
             choose = 2
         elif value1 == 'Other':
-            output = message("เกมนี้ฉันทายว่าคุยมีความสุขไหม, คุณก็ต้องพิมพ์เรื่องของตัวเองสิ, "
+            output = message("เกมนี้ฉันทายว่าคุณความสุขไหม, คุณก็ต้องพิมพ์เรื่องของตัวเองสิ, "
                              "พิมพ์ประโยคต่อไปเลยฉันจะทาย")
             choose = 2
         elif value == 'สุข':
