@@ -198,10 +198,6 @@ def handle_message(event):
         if inp_text == 'เลิกเล่น':
             output = message('เบื่อแล้วเหรอ งั้นเล่นอะไรต่อดี')
             choose = 1
-        elif value1 != 'บอกเล่า':
-            output = message('ฉันบอกไม่ได้หรอก, เพราะนั่นไม่ใช่ประโยคบอกเล่า, คุณต้องใช้ประโยคบอกเล่า, '
-                             'ฉันถึงจะรู้ว่ามันจริงหรือไม่จริง, พิมพ์ประโยคต่อไปมาได้เลยนะ')
-            choose = 3
         elif value == 'มุสา':
             output = message_with_con('คุณโกหก', confident)
             choose = 3
