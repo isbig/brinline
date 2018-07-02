@@ -20,6 +20,7 @@ from collections import namedtuple
 import deepcut
 import os
 import psycopg2
+import random
 
 
 # Wit.ai parameters
@@ -84,16 +85,24 @@ def handle_message(event):
 
     def message_with_con(a, con):
         if con > 0.8:
-            mes = "ฉันมั่นใจว่า, " + a
+            s = ['แน่นอนว่า', 'ฉันมั่นใจว่า', 'ไม่ต้องสงสัยเลย']
+            n = [', ', '']
+            mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         elif 0.6 < con <= 0.8:
-            mes = "ฉันว่า" + a
+            s = ['คิดว่า', 'ฉันว่า', 'ฉันรู้ว่า']
+            n = [', ', '']
+            mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         elif 0.4 < con <= 0.6:
-            mes = "ฉันไม่ค่อยมันใจนะ, แต่ฉันว่า" + a
+            s = ['ไม่ค่อยมันใจว่า', 'ไม่ค่อยมั่นใจนะว่า', 'ฉันไม่แน่ใจนะว่า']
+            n = [', ', '']
+            mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         else:
-            mes = "ฉันไม่มันใจ, แต่ก็ยังคิดว่า" + a
+            s = ['ฉันไม่แน่ใจว่า', 'ไม่ค่อยมันใจเลยว่า', 'ฉันไม่แน่ใจ แต่ก็คิดว่า']
+            n = [', ', '']
+            mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         return b
 
