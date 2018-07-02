@@ -86,22 +86,22 @@ def handle_message(event):
     def message_with_con(a, con):
         if con > 0.8:
             s = ['แน่นอนว่า', 'ฉันมั่นใจว่า', 'ไม่ต้องสงสัยเลย']
-            n = [', ', '']
+            n = [', ', ', ', '']
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         elif 0.6 < con <= 0.8:
             s = ['คิดว่า', 'ฉันว่า', 'ฉันรู้ว่า']
-            n = [', ', '']
+            n = [', ', ', ', '']
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         elif 0.4 < con <= 0.6:
             s = ['ไม่ค่อยมันใจว่า', 'ไม่ค่อยมั่นใจนะว่า', 'ฉันไม่แน่ใจนะว่า']
-            n = [', ', '']
+            n = [', ', ', ', '']
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         else:
             s = ['ฉันไม่แน่ใจว่า', 'ไม่ค่อยมันใจเลยว่า', 'ฉันไม่แน่ใจ แต่ก็คิดว่า']
-            n = [', ', '']
+            n = n = [', ', ', ', '']
             mes = random.choice(s) + random.choice(n) + a
             b = mes.split(', ')
         return b
@@ -153,10 +153,20 @@ def handle_message(event):
 
     def happy_sad(inp_text, wit_token):
         value, confident = extract_value(inp_text, wit_token)
+
+        value1 = extract_value(inp_text, sf)
         chm = namedtuple('out', 'text pur')
         if inp_text == 'เลิกเล่น':
             output = message("ไม่เล่นทายใจแล้วหรือ, ถ้างั้นเล่นอะไรดีล่ะ")
             choose = 1
+        elif value1 == 'Me':
+            output = message("ฉันจะทายเรื่องของตัวเองทำไม, คุณอยากเลิกเล่นไหม, ถ้าอยากเลิกเล่นพิมพ์ว่าเลิกเล่น, "
+                             "หรือเล่นต่อก็พิมพ์เรื่องของคุณเอง")
+            choose = 2
+        elif value1 == 'Other':
+            output = message("เกมนี้ฉันทายว่าคุยมีความสุขไหม, คุณก็ต้องพิมพ์เรื่องของตัวเองสิ, "
+                             "พิมพ์ประโยคต่อไปเลยฉันจะทาย")
+            choose = 2
         elif value == 'สุข':
             output = message_with_con('นั่นทำให้คุณมีความสุข', confident)
             choose = 2
@@ -164,7 +174,7 @@ def handle_message(event):
             output = message_with_con('นั่นทำให้คุณเป็นทุกข์', confident)
             choose = 2
         elif value == 'เฉยๆ':
-            output = message('นั่นทำให้คุณเฉยๆ')
+            output = message_with_con('นั่นทำให้คุณเฉยๆ')
             choose = 2
         else:
             output = message('ไม่รู้เหมือนกัน อ่ะเล่นต่อ')
