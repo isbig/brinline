@@ -82,16 +82,20 @@ def handle_message(event):
     def message(mes):
         return mes.split(', ')
 
-    def message_with_con(mes, con):
+    def message_with_con(a, con):
         if con > 0.8:
-            a = "ฉันมั่นใจว่า" + mes.split(', ')
+            mes = "ฉันมั่นใจว่า, " + a
+            b = mes.split(', ')
         elif 0.6 < con <= 0.8:
-            a = "ฉันว่า" + mes.split(', ')
+            mes = "ฉันว่า" + a
+            b = mes.split(', ')
         elif 0.4 < con <= 0.6:
-            a = "ฉันไม่ค่อยมันใจนะ, แต่ฉันว่า" + mes.split(', ')
+            mes = "ฉันไม่ค่อยมันใจนะ, แต่ฉันว่า" + a
+            b = mes.split(', ')
         else:
-            a = "ฉันไม่มันใจ, แต่ก็ยังคิดว่า" + mes.split(', ')
-        return a
+            mes = "ฉันไม่มันใจ, แต่ก็ยังคิดว่า" + a
+            b = mes.split(', ')
+        return b
 
     def choose_mode(inp_text, wit_token):
         value, confident = extract_value(inp_text, wit_token)
