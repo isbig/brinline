@@ -69,18 +69,32 @@ def handle_message(event):
 
         try:
             intent_value = deep['data'][0]['__wit__legacy_response']['entities']['intent'][0]['value']
+            intent_confident = deep['data'][0]['__wit__legacy_response']['entities']['intent'][0]['confidence']
         except KeyError:
             try:
                 intent_value = deep['entities']['intent'][0]['value']
+                intent_confident = deep['entities']['intent'][0]['confidence']
             except KeyError:
                 intent_value = deep['entities']
-        return intent_value
+                intent_confident = deep['entities']
+        return intent_value, intent_confident
 
     def message(mes):
         return mes.split(', ')
 
+    def message_with_con(mes, con):
+        if con > 0.8:
+            a = "ฉันมั่นใจว่า" + mes.split(', ')
+        elif 0.6 < con <= 0.8:
+            a = "ฉันว่า" + mes.split(', ')
+        elif 0.4 < con <= 0.6:
+            a = "ฉันไม่ค่อยมันใจนะ, แต่ฉันว่า" + mes.split(', ')
+        else:
+            a = "ฉันไม่มันใจ, แต่ก็ยังคิดว่า" + mes.split(', ')
+        return a
+
     def choose_mode(inp_text, wit_token):
-        value = extract_value(inp_text, wit_token)
+        value, confident = extract_value(inp_text, wit_token)
         chm = namedtuple('out', 'text pur')
         if value == 'อยากเล่นเกม':
             output = message("อยากเล่นเกมอะไรนะ")
@@ -100,7 +114,7 @@ def handle_message(event):
         return chm(text=output, pur=choose)
 
     def choose_game(inp_text, wit_token):
-        value = extract_value(inp_text, wit_token)
+        value, confident = extract_value(inp_text, wit_token)
         sen_type = extract_value(inp_text, sen)
         chm = namedtuple('out', 'text pur')
         if sen_type == 'ถาม':
@@ -125,16 +139,16 @@ def handle_message(event):
         return chm(text=output, pur=choose)
 
     def happy_sad(inp_text, wit_token):
-        value = extract_value(inp_text, wit_token)
+        value, confident = extract_value(inp_text, wit_token)
         chm = namedtuple('out', 'text pur')
         if inp_text == 'เลิกเล่น':
             output = message("ไม่เล่นทายใจแล้วหรือ, ถ้างั้นเล่นอะไรดีล่ะ")
             choose = 1
         elif value == 'สุข':
-            output = message('นั่นทำให้คุณมีความสุข')
+            output = message_with_con('นั่นทำให้คุณมีความสุข', confident)
             choose = 2
         elif value == 'ทุกข์':
-            output = message('นั่นทำให้คุณเป็นทุกข์')
+            output = message_with_con('นั่นทำให้คุณเป็นทุกข์', confident)
             choose = 2
         elif value == 'เฉยๆ':
             output = message('นั่นทำให้คุณเฉยๆ')
@@ -151,10 +165,10 @@ def handle_message(event):
             output = message('เบื่อแล้วเหรอ งั้นเล่นอะไรต่อดี')
             choose = 1
         elif value == 'มุสา':
-            output = message('คุณโกหก')
+            output = message_with_con('คุณโกหก', confident)
             choose = 3
         elif value == 'อาจจริง':
-            output = message('ก็เป็นไปได้')
+            output = message_with_con('เรื่องนี้เป็นไปได้', confident)
             choose = 3
         else:
             output = message('ไม่รู้เลยว่าโกหกหรือจริง แปลกมาก')
