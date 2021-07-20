@@ -17,11 +17,11 @@ def sent_noti_event(token):
     return out_me
 
 
-def sent_notify(token):
+def sent_notify(token_cal):
     url = 'https://notify-api.line.me/api/notify'
     token = 'keys'
     headers = {'content-type':'application/x-www-form-urlencoded','Authorization':'Bearer '+SECr}
-    msg = sent_noti_event(token)
+    msg = sent_noti_event(token_cal)
     r = requests.post(url, headers=headers, data = {'message':msg})
 
 
@@ -32,6 +32,7 @@ def calen():
     uri = request.headers['X-Goog-Resource-URI']
     id = request.headers['X-Goog-Channel-ID']
     token = request.headers['X-Goog-Channel-Token']
+    print(token)
     sent_notify(token)
     return '200'
 
