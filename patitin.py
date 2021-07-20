@@ -10,7 +10,7 @@ import psycopg2
 from psycopg2.extras import Json, DictCursor
 
 try:
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.environ['DATABASE_URL1']
 except KeyError:
     import keyda as kd
     DATABASE_URL = kd.DATABASE_URL
