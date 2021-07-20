@@ -13,8 +13,7 @@ app = Flask(__name__)
 def sent_noti_event(token):
     notina = pt.ReadEvent()
     noti = notina.push_noti(token)
-    out_me = noti.push_noti(token)
-    return out_me
+    return noti
 
 
 def sent_notify(token_cal):
