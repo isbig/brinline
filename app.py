@@ -4,6 +4,7 @@ import requests
 import os
 
 DATABASE_URL = os.getenv('DATABASE_URL')
+SECr = os.getenv('SECr')
 
 app = Flask(__name__)
 
