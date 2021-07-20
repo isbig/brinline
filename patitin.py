@@ -410,7 +410,7 @@ class GetItem:
                              'delcal': 'รายการที่ไม่ใช้'}
         self.showDe = True
 
-    def watch(self, address, name_cal):
+    def watch(self, address, name_cal, expiration):
         data = {
             "address": address,  # The address where notifications are delivered for this channel.
             "id": str(uuid.uuid4()),  # A UUID or similar unique string that identifies this channel.
@@ -419,7 +419,8 @@ class GetItem:
             "type": "web_hook",
             # The type of delivery mechanism used for this channel. Valid values are "web_hook" (or "webhook"). Both
             # values refer to a channel where Http requests are used to deliver messages.
-            "token": name_cal
+            "token": name_cal,
+            "expiration": expiration
         }
         name_cal = name_cal
         events = self.service.events().watch(calendarId=self.cal_id[name_cal], body=data)
