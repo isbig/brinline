@@ -30,8 +30,10 @@ def calen():
     state = request.headers['X-Goog-Resource-State']
     uri = request.headers['X-Goog-Resource-URI']
     id = request.headers['X-Goog-Channel-ID']
+    expiration_time = request.headers['X-Goog-Channel-Expiration']
     token = request.headers['X-Goog-Channel-Token']
     print(token)
+    print(expiration_time)
     sent_notify(token)
     return '200'
 
