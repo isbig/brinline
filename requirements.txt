@@ -12,7 +12,6 @@ line-bot-sdk
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
-tensorflow-cpu
 pytz
 fuzzywuzzy
 python-Levenshtein
