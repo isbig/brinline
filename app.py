@@ -32,6 +32,8 @@ def calen():
     state = request.headers['X-Goog-Resource-State']
     uri = request.headers['X-Goog-Resource-URI']
     id = request.headers['X-Goog-Channel-ID']
+    print(uri)
+    print(id)
     expiration_time = request.headers['X-Goog-Channel-Expiration']
     token = request.headers['X-Goog-Channel-Token']
     datetime_exp = datetime.datetime.strptime("Tue, 27 Jul 2021 07:26:12 GMT", '%a, %d %b %Y %H:%M:%S %Z')
