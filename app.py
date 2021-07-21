@@ -56,7 +56,7 @@ def calen():
     return '200'
 
 @app.route("/", methods=['POST', 'GET'])
-def calen():
+def baal():
     # get X-Line-Signature header value
     state = request.headers['X-Goog-Resource-State']
     uri = request.headers['X-Goog-Resource-ID']
