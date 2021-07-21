@@ -30,7 +30,7 @@ def sent_notify(token_cal):
 def calen():
     # get X-Line-Signature header value
     state = request.headers['X-Goog-Resource-State']
-    uri = request.headers['X-Goog-Resource-URI']
+    uri = request.headers['X-Goog-Resource-ID']
     id = request.headers['X-Goog-Channel-ID']
     print(uri)
     print(id)
