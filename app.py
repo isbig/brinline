@@ -55,6 +55,38 @@ def calen():
     sent_notify(token)
     return '200'
 
+@app.route("/", methods=['POST', 'GET'])
+def calen():
+    # get X-Line-Signature header value
+    state = request.headers['X-Goog-Resource-State']
+    uri = request.headers['X-Goog-Resource-ID']
+    id = request.headers['X-Goog-Channel-ID']
+    print(uri)
+    print(id)
+    expiration_time = request.headers['X-Goog-Channel-Expiration']
+    token = request.headers['X-Goog-Channel-Token']
+    datetime_exp = datetime.datetime.strptime("Tue, 27 Jul 2021 07:26:12 GMT", '%a, %d %b %Y %H:%M:%S %Z')
+    datetime_before_exp_2 = datetime_exp - datetime.timedelta(days=2)
+    next_exp = datetime_exp + datetime.timedelta(days=30)
+    unixtime = time.mktime(next_exp.timetuple())
+    unixtime_exp = int(unixtime * 1000)
+    address = "https://brinline.herokuapp.com/"
+    notina = pt.GetItem()
+    toayu = notina.stop_watch(address, id, uri)
+    if datetime_before_exp_2 < datetime.datetime.now():
+        # วันนี้เลย วันครบกำหนดลบ2 มาแล้ว ให้ทำการต่ออายุ
+        notina = pt.GetItem()
+        address = "https://brinline.herokuapp.com/"
+        name_cal = token
+        toayu = notina.stop_watch(address, id, uri)
+    else:
+        # วันนี้ยังไม่ถึง วันครบกำหนดลบ2 มาแล้ว ให้ทำการต่ออายุ
+        pass
+    print(token)
+    print(expiration_time)
+    sent_notify(token)
+    return '200'
+
 
 @app.route('/googleff9deb20e4a46255.html')
 def upload_file():
